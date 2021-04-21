@@ -9,13 +9,13 @@ RECORDS_PICKLE_FILE: str = 'processed-data/vcf-records/records'
 PATIENT_ID_COL_NAME: str = 'PTID'
 EXPRESSION_KEY: str = 'expression'
 MRI_KEY: str = 'mri'
-PHENOTYPES_KEY: str = 'phenotypes'
 DATASET_PATH: str = 'processed-data/datasets/{}/{}.csv'
 COL_TYPES_PATH: str = 'processed-data/datasets/{}/{}-col-types.csv'
 VARIANTS_CSV_PATH: str = 'processed-data/variants/variants'
 PTIDS_PATH: str = 'processed-data/{}-ptids.csv'
 MITO_CHROM_NUM: str = 'mito'
 NUMERIC_COL_TYPE: str = 'numeric'
+RAW_PHENOTYPES_DATA_PATH: str = 'MergeTables/ToCSV/raw-data-set.csv'
 
 
 def get_del_col(data_set: DataFrame, col_name: str) -> DataFrame:
