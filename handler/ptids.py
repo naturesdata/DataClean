@@ -6,8 +6,7 @@ from pandas import DataFrame, read_csv
 from os.path import isfile
 
 from handler.utils import (
-    PATIENT_ID_COL_NAME, PTIDS_PATH, DATASET_PATH, EXPRESSION_KEY, MRI_KEY, PHENOTYPES_KEY, MITO_CHROM_NUM,
-    VARIANTS_CSV_PATH
+    PATIENT_ID_COL_NAME, PTIDS_PATH, DATASET_PATH, EXPRESSION_KEY, MRI_KEY, RAW_PHENOTYPES_DATA_PATH
 )
 
 
@@ -26,12 +25,12 @@ def get_ptids(csv_paths: list) -> DataFrame:
     intersect_ptids: None = None
 
     for csv_path in tqdm(csv_paths):
-        data_set: DataFrame = read_csv(csv_path)
+        ptids: DataFrame = read_csv(csv_path, usecols=[PATIENT_ID_COL_NAME])
 
         if intersect_ptids is None:
-            intersect_ptids: set = set(data_set[PATIENT_ID_COL_NAME])
+            intersect_ptids: set = set(ptids[PATIENT_ID_COL_NAME])
         else:
-            intersect_ptids: set = intersect_ptids.intersection(set(data_set[PATIENT_ID_COL_NAME]))
+            intersect_ptids: set = intersect_ptids.intersection(set(ptids[PATIENT_ID_COL_NAME]))
 
         print(len(intersect_ptids))
 
@@ -51,19 +50,11 @@ def get_dataset_paths(cohort: str) -> list:
 
     expression_path: str = DATASET_PATH.format(cohort, EXPRESSION_KEY)
     mri_path: str = DATASET_PATH.format(cohort, MRI_KEY)
-    phenotypes_path: str = DATASET_PATH.format(cohort, PHENOTYPES_KEY)
-
-    chromosome_nums: list = [MITO_CHROM_NUM, 23]
-    chromosome_paths: list = ['{}{}.csv'.format(VARIANTS_CSV_PATH, num) for num in chromosome_nums]
-
+    phenotypes_path: str = RAW_PHENOTYPES_DATA_PATH
     csv_paths: list = [phenotypes_path, expression_path]
 
     # The MRI data set needs the patient IDs before it can be made
     if isfile(mri_path):
         csv_paths.append(mri_path)
-
-    # Additionally, the genetic variants data sets are optional
-    if isfile(chromosome_paths[0]):
-        csv_paths += chromosome_paths
 
     return csv_paths
