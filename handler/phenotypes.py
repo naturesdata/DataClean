@@ -146,6 +146,23 @@ def clean_nominal_data(data_set: DataFrame, data_types: DataFrame):
     nominal_data: ndarray = imputer.fit_transform(nominal_data)
     nominal_data: DataFrame = DataFrame(nominal_data, columns=nominal_cols)
 
+    # Replace commas in nominal values with periods to avoid parsing issues later
+    for col_name in list(nominal_data):
+        col: Series = nominal_data[col_name]
+
+        for idx, val in zip(nominal_data.index, col):
+            assert nominal_data[col_name][idx] == val
+
+            if ',' in str(val):
+                val: str = val.replace(',', '.')
+                nominal_data[col_name][idx] = val
+
+    for col in list(nominal_data):
+        col: Series = nominal_data[col]
+
+        for val in col:
+            assert ',' not in str(val)
+
     return nominal_data, nominal_cols
 
 
