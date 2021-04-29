@@ -6,7 +6,7 @@ DATASET="combined"
 JOB_NAME=$SCRIPT_NAME-$COHORT
 
 sbatch -J $JOB_NAME \
-    --time=00-09:00:00 \
+    --time=00-06:00:00 \
     --nodes=1 \
     --ntasks=1 \
     --mem=1600G \

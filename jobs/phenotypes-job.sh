@@ -5,7 +5,7 @@ COHORT="adni"
 JOB_NAME=${SCRIPT_NAME}-${COHORT}
 
 sbatch -J $JOB_NAME \
-    --time=00-12:00:00 \
+    --time=00-02:00:00 \
     --nodes=1 \
     --ntasks=1 \
     --mem=64G \

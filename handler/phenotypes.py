@@ -1,7 +1,7 @@
 """Processes the phenotypic data and makes mappings from patient ID to pertinent phenotypic features"""
 
 from sys import argv
-from pandas import concat, DataFrame, get_dummies, factorize, read_csv, Series
+from pandas import concat, DataFrame, get_dummies, read_csv, Series
 from numpy import concatenate, ndarray, nanmin, nanmax, isnan
 from pickle import dump
 # noinspection PyUnresolvedReferences
@@ -10,14 +10,13 @@ from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer, SimpleImputer
 
 from handler.utils import (
-    PATIENT_ID_COL_NAME, NUMERIC_COL_TYPE, normalize, DATASET_PATH, COL_TYPES_PATH, get_del_col,
-    RAW_PHENOTYPES_DATA_PATH, PTIDS_PATH
+    PATIENT_ID_COL_NAME, NUMERIC_COL_TYPE, normalize, DATASET_PATH, COL_TYPES_PATH, RAW_PHENOTYPES_DATA_PATH, PTIDS_PATH
 )
 
 PHENOTYPES_KEY: str = 'phenotypes'
 KNOWN_VAL_THRESHOLD: float = 0.8
 NOMINAL_COL_TYPE: str = 'nominal'
-MIN_CATEGORY_SIZE: int = 10
+MIN_CATEGORY_SIZE: int = 20
 
 
 def handle():
